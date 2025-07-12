@@ -1,10 +1,11 @@
 export default function Log({ turns, players }) {
   return (
     <div className="game-log">
-      {turns.map((turn, index) => {
+      {turns.map((turn) => {
         return (
-          <p key={index}>
-            {players[turn.player]} has selected square {turn.square + 1}
+          <p key={turn.square}>
+            {players[turn.player]} has marked square {turn.square + 1} with{" "}
+            {turn.player}
           </p>
         );
       })}

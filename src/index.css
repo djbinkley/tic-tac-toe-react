@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Caprasimo&family=Roboto+Slab:wght@400;700&display=swap');
+
 * {
   box-sizing: border-box;
 }
@@ -22,7 +24,7 @@ header {
 }
 
 header h1 {
-  font-family: 'Caprasimo', cursive;
+  font-family: cursive;
   font-size: 3rem;
   margin: .5rem 0;
   font-weight: 300;
@@ -48,6 +50,7 @@ body {
   margin: auto;
   border-radius: 8px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  position: relative;
 }
 
 .players {
@@ -149,4 +152,112 @@ body {
   padding: 1rem 2rem;
   font-size: 1.25rem;
   text-align: center;
+}
+
+.game-log p {
+  animation: slide-in-from-left 1s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+}
+
+.game-over {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(39, 25, 12, .95);
+  animation: pop-in 0.5s cubic-bezier(0.68, -0.55, 0.65, 0.52) forwards;
+}
+
+.game-over h1 {
+  font-family: cursive;
+  font-size: 4rem;
+  text-align: center;
+  margin: 0;
+  color: #c98a4f;
+}
+
+.game-over p {
+  font-size: 2rem;
+  color: #e7cbb1;
+}
+
+.game-over button {
+  border: 2px solid #c98a4f;
+  font-size: 1.75rem;
+  padding: .35rem .75rem .35rem .75rem;
+  border-radius: 6px;
+  background: transparent;
+  color: #c98a4f;
+  cursor: pointer;
+}
+
+.game-over button:hover {
+  background: #c98a4f;
+  color: rgba(39, 25, 12);
+  transform: scale(1.1);
+  box-shadow: 0 0 30px rgba(195, 125, 60, .8);
+}
+
+@keyframes slide-in-from-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-30%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse-text {
+  0% {
+    color: #edd9c5;
+  }
+
+  50% {
+    color: #e0bf9e;
+  }
+
+  100% {
+    color: #edd9c5;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    border-color: #c98c4f;
+    box-shadow: 0 0 0 0 rgba(160, 125, 71, 0.4);
+  }
+
+  50% {
+    border-color: #b07336;
+    box-shadow: 0 0 0 0.5rem rgba(39, 25, 12, 0);
+  }
+
+  100% {
+    border-color: #c98c4f;
+    box-shadow: 0 0 0 0 rgba(20, 13, 6, 0);
+  }
+}
+
+/* Animation for showing the "Game Over" element */
+@keyframes pop-in {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  80% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }

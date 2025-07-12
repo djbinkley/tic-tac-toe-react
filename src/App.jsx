@@ -2,6 +2,7 @@ import { useState } from "react";
 import Player from "./components/Player.jsx";
 import GameBoard from "./components/GameBoard.jsx";
 import Log from "./components/Log.jsx";
+import GameOver from "./components/GameOver.jsx";
 
 // Declare global vars
 const GAME_BOARD = [null, null, null, null, null, null, null, null, null];
@@ -44,6 +45,22 @@ function findGameBoard(gameTurns) {
   return gameBoard;
 }
 
+function determineWinner(gameBoard, players) {
+  let winner = null;
+
+  for (let [a, b, c] of winLines) {
+    if (
+      gameBoard[a] &&
+      gameBoard[a] === gameBoard[b] &&
+      gameBoard[a] === gameBoard[c]
+    ) {
+      return players[gameBoard[a]];
+    }
+  }
+
+  return players[winner];
+}
+
 function App() {
   // Keep track of players and turns
   const [players, setPlayers] = useState(PLAYERS);
@@ -52,6 +69,8 @@ function App() {
   // Local vars to hold derived state
   const activePlayer = findActivePlayer(gameTurns);
   const gameBoard = findGameBoard(gameTurns);
+  const winner = determineWinner(gameBoard, players);
+  const isADraw = gameTurns.length === 9 && !winner;
 
   // Push latest player turn onto the player turns
   function handleSelectSquare(index) {
@@ -80,25 +99,26 @@ function App() {
     });
   }
 
-  let turnCount = 0;
-
   return (
     <section>
       <div className="board-container">
         <ol className="players">
           <Player
             symbol="X"
-            initialName={players.X}
+            initialName={PLAYERS.X}
             isActive={activePlayer === "X"}
             onChangeName={handleChangeName}
           />
           <Player
             symbol="O"
-            initialName={players.O}
+            initialName={PLAYERS.O}
             isActive={activePlayer === "O"}
             onChangeName={handleChangeName}
           />
         </ol>
+        {(winner || isADraw) && (
+          <GameOver winner={winner} onRestart={handleRestart} />
+        )}
         <GameBoard gameBoard={gameBoard} onSelectSquare={handleSelectSquare} />
       </div>
       <Log turns={gameTurns} players={players} />

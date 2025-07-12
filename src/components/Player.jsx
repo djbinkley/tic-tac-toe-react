@@ -7,7 +7,7 @@ export default function Player({
   onChangeName,
 }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [playerName, setPlayerName] = useState("Player");
+  const [playerName, setPlayerName] = useState(initialName);
 
   function handleClick() {
     setIsEditing((prevValue) => {
@@ -24,14 +24,14 @@ export default function Player({
   }
 
   // Conditionally rendering either player name or input to change name
-  let playerContent = <span className="player-name">{initialName}</span>;
+  let playerContent = <span className="player-name">{playerName}</span>;
 
   if (isEditing) {
     playerContent = (
       <input
         type="text"
         required
-        value={initialName}
+        value={playerName}
         onChange={handleChangePlayerName}
       />
     );
