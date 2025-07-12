@@ -134,7 +134,7 @@ body {
   justify-content: center;
   cursor: pointer;
   transition: background 0.2s ease;
-  font-size: 2rem;
+  font-size: 5rem;
   aspect-ratio: 1;
   background-color: #c88c51;
 }

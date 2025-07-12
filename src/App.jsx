@@ -1,7 +1,8 @@
 import { useState } from "react";
 import Player from "./components/Player.jsx";
+import GameBoard from "./components/GameBoard.jsx";
 
-const gameBoard = [null, null, null, null, null, null, null, null, null];
+const GAME_BOARD = [null, null, null, null, null, null, null, null, null];
 
 const winLines = [
   [0, 1, 2], // top row
@@ -14,13 +15,56 @@ const winLines = [
   [2, 4, 6], // ↙ diag
 ];
 
-const players = {
+const PLAYERS = {
   X: "Player 1",
   Y: "Player 2",
 };
 
+function findActivePlayer(gameTurns) {
+  let currentPlayer = "X";
+
+  if (gameTurns.length > 0 && gameTurns[0].player === "X") {
+    currentPlayer = "O";
+  }
+
+  return currentPlayer;
+}
+
+function findGameBoard(gameTurns) {
+  let gameBoard = [...GAME_BOARD];
+
+  for (const turn of gameTurns) {
+    const { player, square } = turn;
+    console.log("PLAYER:: ", player);
+    console.log("SQUARE:: ", square);
+    gameBoard[square] = player;
+  }
+  console.log("RUNNING findGameBoard");
+  console.log("GAME BOARD:: ", gameBoard);
+
+  return gameBoard;
+}
+
 function App() {
-  const activePlayer = players.X;
+  const [players, setPlayers] = useState(PLAYERS);
+  const [gameTurns, setGameTurns] = useState([]);
+
+  const activePlayer = findActivePlayer(gameTurns);
+  const gameBoard = findGameBoard(gameTurns);
+
+  function handleSelectSquare(index) {
+    setGameTurns((prevTurns) => {
+      const currentPlayer = findActivePlayer(prevTurns);
+
+      return [
+        {
+          player: findActivePlayer(prevTurns),
+          square: index,
+        },
+        ...prevTurns,
+      ];
+    });
+  }
 
   return (
     <section>
@@ -29,15 +73,7 @@ function App() {
           <Player symbol="X" isActive={activePlayer} />
           <Player symbol="O" isActive={activePlayer} />
         </ol>
-        <div className="game-board">
-          {gameBoard.map((value, index) => {
-            return (
-              <button className="game-button" key={index}>
-                {value}
-              </button>
-            );
-          })}
-        </div>
+        <GameBoard gameBoard={gameBoard} onSelectSquare={handleSelectSquare} />
       </div>
     </section>
   );
