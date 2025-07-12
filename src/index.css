@@ -83,6 +83,11 @@ body {
   color: #e0bf9e;
 }
 
+.players li.active {
+  border-color: #4e3318;
+  animation: pulse 2s infinite ease-in-out;
+}
+
 .player {
   border: 2px solid transparent;
   padding: .5rem;
@@ -137,4 +142,11 @@ body {
   font-size: 5rem;
   aspect-ratio: 1;
   background-color: #c88c51;
+}
+
+.game-log {
+  width: 100%;
+  padding: 1rem 2rem;
+  font-size: 1.25rem;
+  text-align: center;
 }

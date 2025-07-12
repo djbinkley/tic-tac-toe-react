@@ -1,6 +1,11 @@
 import { useState } from "react";
 
-export default function Player({ symbol, isActive }) {
+export default function Player({
+  initialName,
+  symbol,
+  isActive,
+  onChangeName,
+}) {
   const [isEditing, setIsEditing] = useState(false);
   const [playerName, setPlayerName] = useState("Player");
 
@@ -8,26 +13,32 @@ export default function Player({ symbol, isActive }) {
     setIsEditing((prevValue) => {
       return !prevValue;
     });
+    if (isEditing) {
+      // Lift player name state up to parent for game board update
+      onChangeName(symbol, playerName);
+    }
   }
 
   function handleChangePlayerName(event) {
     setPlayerName(event.target.value);
   }
 
-  let playerContent = <span className="player-name">{playerName}</span>;
+  // Conditionally rendering either player name or input to change name
+  let playerContent = <span className="player-name">{initialName}</span>;
 
   if (isEditing) {
     playerContent = (
       <input
         type="text"
         required
-        value={playerName}
+        value={initialName}
         onChange={handleChangePlayerName}
       />
     );
   }
 
   return (
+    // Highlight the active player
     <li className={isActive ? "active" : undefined}>
       <span className="player">
         {playerContent}
